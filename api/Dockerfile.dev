@@ -1,0 +1,37 @@
+FROM php:8.1-fpm-alpine
+
+# Apk install
+RUN apk --no-cache update && apk --no-cache add bash git
+
+
+RUN apk add --no-cache \
+		acl \
+		fcgi \
+		file \
+		gettext \
+		git \
+		gnu-libiconv
+
+
+# Install pdo postgresql
+RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev; \
+	docker-php-ext-install -j$(nproc) pdo_pgsql; \
+	apk add --no-cache --virtual .pgsql-rundeps so:libpq.so.5; \
+	apk del .pgsql-deps
+
+
+# Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && php composer-setup.php && php -r "unlink('composer-setup.php');" && mv composer.phar /usr/local/bin/composer
+
+
+# Symfony CLI
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash
+RUN apk add symfony-cli
+
+
+WORKDIR /var/www/api
+
+
+# Expose port 9000 and start php server
+EXPOSE 9000
+CMD ["php-fpm"]

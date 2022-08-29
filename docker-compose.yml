@@ -1,0 +1,52 @@
+version: "3.8"
+
+
+services:
+
+
+  app:
+    container_name: ${APP_NAME}-app
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app:/app
+    restart: on-failure  
+    ports:
+    - "3000:3000"  
+
+
+  api:
+    container_name: ${APP_NAME}-api
+    build:
+        context: ./api
+        dockerfile: Dockerfile.dev
+    volumes:
+      - ./api:/var/www/api
+    ports:
+      - "9000:8000"
+
+
+  database:
+    container_name: ${APP_NAME}-database
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-api}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
+      - POSTGRES_USER=${POSTGRES_USER:-api-platform}
+    volumes:
+      - ./docker/database:/var/lib/postgresql/data:rw
+
+
+  adminer:
+    container_name: ${APP_NAME}-adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+
+volumes:
+  database:
