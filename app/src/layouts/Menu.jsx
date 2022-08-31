@@ -36,6 +36,7 @@ const Menu = () => {
 					}
 				</button>
 			</div>
+			<div className='text-zinc-400 pl-5'>Beta v.1.0</div>
 			<div className={`flex-1 bg-white p-3 md:w-64 ${show ? 'block' : 'hidden md:block'}`}>
 				<div className='pt-3 md:pt-0 text-xl md:text-sm'>
 					<div className='text-zinc-400 font-light uppercase mt-5 pl-2 pb-2'>
