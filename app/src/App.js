@@ -35,7 +35,6 @@ dayjs.extend(localizedFormat)
 
 const App = () => {
 
-
   const dispatch = useDispatch()
 
   const authenticationStatus = useSelector(getAuthenticationStatus);

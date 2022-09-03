@@ -46,6 +46,7 @@ const authenticationSlice = createSlice({
             reducer(state) {
                 // Token ?
                 const token = window.localStorage.getItem("cohealthToken");
+                console.log('token', token)
                 // Token encore valide ?
                 if (token) {
                     const { exp: expiration } = jwt_decode(token);

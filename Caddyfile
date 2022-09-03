@@ -1,0 +1,31 @@
+{
+    # email to generate a valid SSL certificate
+    email ohsito@gmail.com
+
+    # HTTP/3 support
+    servers {
+        protocol {
+            experimental_http3
+        }
+    }
+}
+
+# Host which Caddy will handle
+{$DOMAIN_NAME}
+
+
+handle {
+    reverse_proxy app:3000
+    encode gzip zstd
+    file_server
+}
+
+handle_path /api* {
+    root * /srv/api/public
+    php_fastcgi api:9000
+    encode gzip zstd
+    file_server
+}
+
+
+
