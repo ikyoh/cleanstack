@@ -12,6 +12,7 @@ const initialState = {
     saved: null
 }
 
+
 export const fetchAssurances = createAsyncThunk('assurances/fetchAssurances', async () => {
     try {
         const response = await toast.promise(
@@ -20,6 +21,9 @@ export const fetchAssurances = createAsyncThunk('assurances/fetchAssurances', as
                 pending: 'Chargement des assurances',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchAssurances"
             }
         )
         return response.data["hydra:member"]
@@ -30,13 +34,16 @@ export const fetchAssurances = createAsyncThunk('assurances/fetchAssurances', as
 })
 
 export const fetchAssurance = createAsyncThunk('assurances/fetchAssurance', async (id) => {
-   try {
+    try {
         const response = await toast.promise(
             axios.get(API_ASSURANCES + "/" + id),
             {
                 pending: "Chargement de l'assurance",
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchAssurance"
             }
         )
         return response.data
@@ -48,7 +55,7 @@ export const fetchAssurance = createAsyncThunk('assurances/fetchAssurance', asyn
 
 export const addAssurance = createAsyncThunk('assurances/addAssurance', async (form) => {
 
-    const datas = {...form}
+    const datas = { ...form }
     datas.createdAt = dayjs().format()
 
     try {
@@ -58,6 +65,9 @@ export const addAssurance = createAsyncThunk('assurances/addAssurance', async (f
                 pending: 'Enregistrement',
                 success: 'Assurance enregistrée',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addAssurance"
             }
         )
         return response.data
@@ -69,7 +79,7 @@ export const addAssurance = createAsyncThunk('assurances/addAssurance', async (f
 
 export const updateAssurance = createAsyncThunk('assurances/updateAssurance', async (form) => {
 
-    const datas = {...form}
+    const datas = { ...form }
     datas.updatedAt = dayjs().format()
 
     try {
@@ -79,6 +89,10 @@ export const updateAssurance = createAsyncThunk('assurances/updateAssurance', as
                 pending: 'Enregistrement',
                 success: 'Assurance modifiée',
                 error: 'Erreur'
+            }
+            ,
+            {
+                toastId: "updateAssurance"
             }
         )
         return response.data
@@ -124,7 +138,7 @@ const assurancesSlice = createSlice({
             })
             .addCase(fetchAssurance.fulfilled, (state, action) => {
                 const index = state.assurances.findIndex(obj => obj['@id'] === action.payload['@id'])
-                state.assurances[index] = {...action.payload, fulfilled : true }
+                state.assurances[index] = { ...action.payload, fulfilled: true }
             })
     }
 })

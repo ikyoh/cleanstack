@@ -20,7 +20,11 @@ export const login = createAsyncThunk('authentication/login', async (form) => {
                 pending: 'Connexion',
                 success: 'Compte connecté',
                 error: 'Problème de connexion'
+            },
+            {
+                toastId: "login"
             }
+            
         )
         return response.data
     } catch (error) {
@@ -46,10 +50,9 @@ const authenticationSlice = createSlice({
             reducer(state) {
                 // Token ?
                 const token = window.localStorage.getItem("cohealthToken");
-                console.log('token', token)
                 // Token encore valide ?
                 if (token) {
-                    const { exp: expiration } = jwt_decode(token);
+                    const { exp: expiration } = jwt_decode(token)
                     if (expiration * 1000 > new Date().getTime()) {
                         axios.defaults.headers["Authorization"] = "Bearer " + token
                         state.status = "succeeded"

@@ -11,18 +11,20 @@ import PatientsContainer from '../features/patients/PatientsContainer';
 import SearchFilter from '../components/SearchFilter';
 import ThTable from '../components/table/ThTable';
 import PageTitle from '../layouts/PageTitle';
-
+import { API_PATIENTS } from '../features/apiConfig'
 
 const PatientsPage = () => {
 
     const navigate = useNavigate();
 
-    const newPatientIRI = useSelector(getPatientsNavigate)
+    const newPatientID = useSelector(getPatientsNavigate)
 
+    console.log('newPatientID', newPatientID)
+    
     useEffect(() => {
-        if (newPatientIRI)
-            navigate(newPatientIRI, { state: { patient: {} } })
-    }, [newPatientIRI])
+        if (newPatientID)
+        navigate("/patients/" + newPatientID, { state: { patient: {} } })
+    }, [newPatientID])
 
     const PageContent = ({ handleOpenModal, handleCloseModal }) => {
 
@@ -35,7 +37,7 @@ const PatientsPage = () => {
         const Row = ({ item }) => {
             return (
                 <tr onClick={() =>
-                    navigate(item['@id'], { state: { patient: item } })
+                    navigate("/patients/" + item.id, { state: { patient: item } })
                 }>
                 {/* <tr onClick={() => handleOpenModal({ title: 'Edition patient', content: <PatientForm event={item} handleCloseModal={handleCloseModal} /> })}> */}
                     <td>{item.id}</td>

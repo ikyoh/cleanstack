@@ -19,6 +19,9 @@ export const fetchDoctors = createAsyncThunk('doctors/fetchDoctors', async () =>
                 pending: 'Chargement des médecins',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchDoctors"
             }
         )
         return response.data["hydra:member"]
@@ -37,6 +40,9 @@ export const fetchDoctor = createAsyncThunk('doctors/fetchDoctor', async (id) =>
                 pending: 'Chargement de la fiche médecin',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchDoctor"
             }
         )
         return response.data
@@ -58,6 +64,9 @@ export const addDoctor = createAsyncThunk('doctors/addDoctor', async (form) => {
                 pending: 'Enregistrement',
                 success: 'Médecin enregistré',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addDoctor"
             }
         )
         return response.data
@@ -79,6 +88,9 @@ export const updateDoctor = createAsyncThunk('doctors/updateDoctor', async (form
                 pending: 'Enregistrement',
                 success: 'Médecin modifié',
                 error: 'Erreur'
+            },
+            {
+                toastId: "updateDoctor"
             }
         )
         return response.data

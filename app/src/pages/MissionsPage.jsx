@@ -19,13 +19,15 @@ const MissionsPage = () => {
 
     const navigate = useNavigate()
 
-    const newMissionIRI = useSelector(getMissionsNavigate)
+    const newMissionID = useSelector(getMissionsNavigate)
     const currentUser = useSelector(getAccount)
 
+    console.log('newMissionID', newMissionID)
+
     useEffect(() => {
-        if (newMissionIRI)
-            navigate(newMissionIRI, { state: { mission: {} } })
-    }, [newMissionIRI])
+        if (newMissionID)
+            navigate("/missions/" + newMissionID, { state: { mission: {} } })
+    }, [newMissionID])
 
 
     const PageContent = ({ handleOpenModal, handleCloseModal }) => {
@@ -78,7 +80,7 @@ const MissionsPage = () => {
                 <tr
                     className={`${item.user['@id'] !== currentUser['@id'] && 'bg-slate-200'}`}
                     onClick={() =>
-                        navigate(item['@id'], { state: { mission: item } })
+                        navigate("/missions/" + item.id, { state: { mission: item } })
                     }>
                     <td >{item.id}</td>
                     <td>

@@ -3,6 +3,7 @@ version: "3.8"
 
 services:
 
+
   caddy:
     image: caddy:2.5.2-alpine
     container_name: ${APP_NAME}-caddy
@@ -15,36 +16,44 @@ services:
     volumes:
       - ./api:/srv/api
       - ./app/build:/srv/app
-      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+    depends_on:
+      - app
+      - api
+
 
   app:
     container_name: ${APP_NAME}-app
     build:
       context: ./app
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
+    stdin_open: true
     volumes:
       - ./app:/app
       - /app/node_modules
-      - /app/build
     restart: on-failure  
     environment:
-      - REACT_APP_API_URL=${API_URL:-http://localhost:9000/api}
+      - CHOKIDAR_USEPOLLING=true  
+      - REACT_APP_URL=${API_URL:-http://localhost:9000}
     ports:
     - "3000:3000"  
+
 
   api:
     container_name: ${APP_NAME}-api
     build:
         context: ./api
-        dockerfile: Dockerfile.dev
+        dockerfile: Dockerfile
     volumes:
       - ./api:/srv/api:rw,cached
     environment:
       - DATABASE_URL=${DATABASE_URL}
     ports :
       - 9000:9000
+    depends_on:
+      - database
 
 
   database:
@@ -67,6 +76,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - database
 
 
 volumes:

@@ -471,7 +471,7 @@ const MissionPage = () => {
                                 <td>{dayjs(p.createdAt).format('DD/MM/YYYY')}</td>
                                 <td>{p.comment}</td>
                                 <td className='float-right'>
-                                    {/* <OpasPrint datas={p} mission={mission} patient={patient} /> */}
+                                    <OpasPrint datas={p} mission={mission} patient={patient} />
                                 </td>
                             </tr>
                         )}

@@ -21,6 +21,9 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
                 pending: 'Chargement des utilisateurs',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchUsers"
             }
         )
         return response.data["hydra:member"];
@@ -38,14 +41,15 @@ export const addUser = createAsyncThunk('users/addUser', async (form) => {
     datas.isOptin = true
 
     try {
-
-        console.log('datas', datas)
         const response = await toast.promise(
             axios.post(API_USERS, datas),
             {
                 pending: 'Enregistrement',
                 success: 'Utilisateur enregistré',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addUser"
             }
         )
         return response.data
@@ -67,6 +71,9 @@ export const updateUser = createAsyncThunk('users/updateUser', async (form) => {
                 pending: 'Enregistrement',
                 success: 'Utilisateur modifié',
                 error: 'Erreur'
+            },
+            {
+                toastId: "updateUser"
             }
         )
         return response.data

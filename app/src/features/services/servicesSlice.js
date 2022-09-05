@@ -18,6 +18,9 @@ export const fetchServices = createAsyncThunk('services/fetchServices', async ()
                 pending: 'Chargement des prestations',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchServices"
             }
         )
         return response.data["hydra:member"];
@@ -35,6 +38,9 @@ export const addService = createAsyncThunk('services/addService', async (form) =
                 pending: 'Enregistrement',
                 success: 'Service enregistré',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addServices"
             }
         )
         return response.data
@@ -52,6 +58,9 @@ export const updateService = createAsyncThunk('services/updateService', async (f
                 pending: 'Enregistrement',
                 success: 'Service modifié',
                 error: 'Erreur'
+            },
+            {
+                toastId: "updateService"
             }
         )
         return response.data

@@ -10,8 +10,8 @@ const FormSelectPatientIRI = ({ name = false, setField, value }) => {
 
     const Patient = ({ item }) => {
         return (
-            <div className={`border-b px-3 py-2 flex justify-between ${value === item['@id'] ? 'bg-action' : 'hover:bg-slate-200 cursor-pointer'}`}
-                onClick={() => setField('patientIRI', item['@id'])}
+            <div className={`border-b px-3 py-2 flex justify-between ${value === item.id ? 'bg-action' : 'hover:bg-slate-200 cursor-pointer'}`}
+                onClick={() => setField('patientIRI', item.id)}
             >
                 <div>
                     {item.firstname} {item.lastname}

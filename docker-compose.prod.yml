@@ -3,17 +3,33 @@ version: "3.8"
 
 services:
 
+  caddy:
+    image: caddy:2.5.2-alpine
+    container_name: ${APP_NAME}-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME:-myapp.local}  
+    volumes:
+      - ./api:/srv/api
+      - ./app/build:/srv/app
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
   app:
     container_name: ${APP_NAME}-app
     build:
       context: ./app
-      dockerfile: Dockerfile.dev        
+      dockerfile: Dockerfile.prod
     volumes:
-      - /app/node_modules
       - ./app:/app
+      - /app/node_modules
     restart: on-failure  
     environment:
-      - REACT_APP_API_URL=${API_URL:-http://localhost:9000/api}
+      - REACT_APP_URL=${API_URL:-http://localhost:9000}
     ports:
     - "3000:3000"  
 
@@ -23,11 +39,11 @@ services:
         context: ./api
         dockerfile: Dockerfile.dev
     volumes:
-      - ./api:/var/www/api
-    ports:
-      - "9000:8000"
+      - ./api:/srv/api:rw,cached
     environment:
       - DATABASE_URL=${DATABASE_URL}
+    ports :
+      - 9000:9000
 
 
   database:
@@ -40,6 +56,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-api-platform}
     volumes:
       - ./docker/database:/var/lib/postgresql/data:rw
+    ports:
+      - 5432:5432
 
 
   adminer:
@@ -52,3 +70,5 @@ services:
 
 volumes:
   database:
+  caddy_data:
+  caddy_config:

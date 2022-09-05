@@ -321,8 +321,6 @@ const MyDoc = ({ datas, mission, patient }) => {
     nurse += 'Email. : ' + mission.user.email
 
 
-    console.log('mission.user.signature.contentUrl', mission.user.signature.contentUrl)
-
     return (
 
         <Document >
@@ -489,12 +487,12 @@ const MyDoc = ({ datas, mission, patient }) => {
                     </View>
                     <View style={styles.column}>
                         <Text style={styles.signature}>Signature de l'infirmier</Text>
-                        {mission.user.signature &&
+                        {/* {mission.user.signature &&
                             <Image style={styles.userSignature} source={
                                 "https://cors-anywhere.herokuapp.com/" + API_URL + mission.user.signature.contentUrl
 
                             } />
-                        }
+                        } */}
                     </View>
                     {mission.coworkersDetailed.length > 0 &&
                         <View style={styles.column}>
@@ -727,8 +725,9 @@ const OpasPrint = ({ datas, mission, patient, }) => {
         return (
             <div>
                 <PDFDownloadLink document={<MyDoc datas={datas} mission={mission} patient={patient} />} fileName={fileName}>
-                    {({ blob, url, loading, error }) =>
-                        loading ? <AiOutlineDownload size={30} color={'white'} /> : <AiOutlineDownload size={30} />
+                    {({ blob, url, loading, error }) =>{
+                        console.log('loading', loading)
+                        loading ? <AiOutlineDownload size={30} color={'white'} /> : <AiOutlineDownload size={30} color={'black'} />}
                     }
                 </PDFDownloadLink>
             </div>

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import { API_URL, API_MISSIONS, API_PRESCRIPTIONS, API_MEDIAS } from "../apiConfig"
+import { API_URL, API_MISSIONS, API_PATIENTS, API_PRESCRIPTIONS, API_MEDIAS, API_DOCTORS, API_ASSURANCES } from "../apiConfig"
 import { toast } from 'react-toastify'
 import * as dayjs from 'dayjs'
 
@@ -27,6 +27,9 @@ export const fetchMissions = createAsyncThunk('missions/fetchMissions', async ()
                 pending: 'Chargement des missions',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchMissions"
             }
         )
         return response.data["hydra:member"]
@@ -52,6 +55,9 @@ export const fetchMission = createAsyncThunk('missions/fetchMission', async (id,
                 pending: 'Chargement de la mission',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchMission"
             }
         )
         return response.data
@@ -73,7 +79,7 @@ export const addMission = createAsyncThunk('missions/addMission', async (form, T
     datas.status = "En cours"
 
     if (form.action === "patientIRI") {
-        datas.patient = API_URL + form.values.patientIRI
+        datas.patient = API_PATIENTS + "/" + form.values.patientIRI
         try {
             const response = await toast.promise(
                 axios.post(API_MISSIONS, datas),
@@ -81,6 +87,9 @@ export const addMission = createAsyncThunk('missions/addMission', async (form, T
                     pending: 'Enregistrement',
                     success: 'Mission enregistrée',
                     error: 'Erreur'
+                },
+                {
+                    toastId: "addMission"
                 }
             )
             return response.data
@@ -100,6 +109,9 @@ export const addMission = createAsyncThunk('missions/addMission', async (form, T
                     pending: 'Enregistrement',
                     success: 'Mission enregistrée',
                     error: 'Erreur'
+                },
+                {
+                    toastId: "addPatient"
                 }
             )
             return response.data
@@ -123,6 +135,9 @@ export const addPrescription = createAsyncThunk('missions/addPrescription', asyn
                 pending: 'Enregistrement',
                 success: 'Document enregistré',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addPrescription"
             }
         )
         return response.data
@@ -187,10 +202,10 @@ export const updateMission = createAsyncThunk('missions/updateMission', async (f
     }
 
     if (form.action === 'doctorIRI')
-        datas.doctor = API_URL + form.values.doctorIRI
+        datas.doctor = API_DOCTORS + "/" + form.values.doctorIRI
 
     if (form.action === 'assuranceIRI')
-        datas.assurance = API_URL + form.values.assuranceIRI
+        datas.assurance = API_ASSURANCES + "/" + form.values.assuranceIRI
 
     if (form.action === 'addDoctor')
         datas.doctor = form.values.doctor
@@ -210,6 +225,9 @@ export const updateMission = createAsyncThunk('missions/updateMission', async (f
                 pending: 'Enregistrement',
                 success: 'Mission modifiée',
                 error: 'Erreur'
+            },
+            {
+                toastId: "updateMission"
             }
         )
 
@@ -251,11 +269,11 @@ const missionsSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(addMission.pending, (state) => {
-                state.navigate = false
+                state.navigate = null
             })
             .addCase(addMission.fulfilled, (state, action) => {
                 state.missions.push(action.payload)
-                state.navigate = action.payload['@id']
+                state.navigate = action.payload.id
             })
             .addCase(updateMission.pending, (state, action) => {
                 const index = state.missions.findIndex(obj => obj['@id'] === action.meta.arg['@id'])
@@ -268,7 +286,6 @@ const missionsSlice = createSlice({
             })
             .addCase(updateMission.fulfilled, (state, action) => {
                 const index = state.missions.findIndex(obj => obj['@id'] === action.payload['@id'])
-                console.log('action.payload', action.payload)
                 state.missions[index] = { ...action.payload, fulfilled: false }
             })
             .addCase(fetchMission.fulfilled, (state, action) => {

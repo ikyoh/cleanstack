@@ -22,6 +22,9 @@ export const fetchPrescriptions = createAsyncThunk('prescriptions/fetchPrescript
                 pending: 'Chargement des prescriptions',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchPrescriptions"
             }
         )
         return response.data["hydra:member"]
@@ -46,6 +49,9 @@ export const fetchPrescription = createAsyncThunk('prescriptions/fetchPrescripti
                 pending: 'Chargement de la prescription',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchPrescription"
             }
         )
         return response.data
@@ -70,6 +76,9 @@ export const addPrescription = createAsyncThunk('prescriptions/addPrescription',
                 pending: 'Enregistrement',
                 success: 'Prescription enregistrée',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addPrescription"
             }
         )
         return response.data
@@ -93,6 +102,9 @@ export const updatePrescription = createAsyncThunk('prescriptions/updatePrescrip
                 pending: 'Enregistrement',
                 success: 'Prescription modifié',
                 error: 'Erreur'
+            },
+            {
+                toastId: "updatePrescription"
             }
         )
         return response.data
@@ -113,6 +125,10 @@ export const updatePrescriptionStatus = createAsyncThunk('prescriptions/updatePr
                 pending: 'Enregistrement',
                 success: 'Prescription modifié',
                 error: 'Erreur'
+            }
+            ,
+            {
+                toastId: "updatePrescriptionStatus"
             }
         )
 

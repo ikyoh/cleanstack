@@ -12,10 +12,10 @@ const LoginFrom = () => {
     const error = useSelector(getAccountError);
     const token = useSelector(getAccountToken);
     const status = useSelector(getAccountStatus);
-
+    
     const initialValues = {
-        username: 'test1@user.com',
-        password: 'password'
+        username: '',
+        password: ''
     }
 
     const validationSchema = Yup.object({

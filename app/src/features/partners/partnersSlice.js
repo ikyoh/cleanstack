@@ -21,6 +21,9 @@ export const fetchPartners = createAsyncThunk('partners/fetchPartners', async ()
                 pending: 'Chargement des partenaires',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchPartners"
             }
         )
         return response.data["hydra:member"];

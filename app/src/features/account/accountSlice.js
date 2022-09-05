@@ -50,6 +50,8 @@ export const updateAccount = createAsyncThunk('account/updateAccount', async (fo
                 pending: 'Enregistrement',
                 success: 'Compte modifié',
                 error: 'Erreur'
+            },{
+                toastId: "updateAccount"
             }
         )
         return response.data
@@ -112,6 +114,7 @@ const accountSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(loginAccount.fulfilled, (state, action) => {
+                console.log('action.payload.token', action.payload.token)
                 axios.defaults.headers["Authorization"] = "Bearer " + action.payload.token
                 localStorage.setItem("cohealthToken", action.payload.token)
                 state.token = "succeeded"

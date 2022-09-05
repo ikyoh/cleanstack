@@ -23,6 +23,9 @@ export const fetchPatients = createAsyncThunk('patients/fetchPatients', async ()
                 pending: 'Chargement des patients',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchPatients"
             }
         )
         return response.data["hydra:member"]
@@ -47,6 +50,9 @@ export const fetchPatient = createAsyncThunk('missions/fetchPatient', async (id,
                 pending: 'Chargement de la fiche patient',
                 success: 'Chargement effectué',
                 error: 'Erreur de chargement'
+            },
+            {
+                toastId: "fetchPatient"
             }
         )
         return response.data
@@ -71,6 +77,9 @@ export const addPatient = createAsyncThunk('patients/addPatient', async (form) =
                 pending: 'Enregistrement',
                 success: 'Patient enregistrée',
                 error: 'Erreur'
+            },
+            {
+                toastId: "addPatient"
             }
         )
         return response.data
@@ -100,6 +109,9 @@ export const updatePatient = createAsyncThunk('patients/updatePatient', async (f
                 pending: 'Enregistrement',
                 success: 'Patient modifié',
                 error: 'Erreur'
+            },
+            {
+                toastId: "updatePatient"
             }
         )
         if (form.action === "addDoctor")
@@ -131,11 +143,11 @@ const patientsSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(addPatient.pending, (state) => {
-                state.navigate = false
+                state.navigate = null
             })
             .addCase(addPatient.fulfilled, (state, action) => {
                 state.patients.push({ ...action.payload, fulfilled: true })
-                state.navigate = action.payload['@id']
+                state.navigate = action.payload.id
             })
             .addCase(updatePatient.pending, (state, action) => {
                 const index = state.patients.findIndex(obj => obj['@id'] === action.meta.arg['@id'])

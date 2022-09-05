@@ -1,5 +1,5 @@
 // from .env
-export const API_URL = process.env.REACT_APP_API_URL;
+export const API_URL = process.env.REACT_APP_URL + "/api";
 
 export const API_AUTHENTICATION = API_URL + "/login";
 export const API_COMMENTS= API_URL + "/comments";
