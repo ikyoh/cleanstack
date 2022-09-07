@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorMessage, FastField } from 'formik'
+import { ErrorMessage, Field } from 'formik'
 import { useSelector } from "react-redux"
 import { API_URL } from '../../features/apiConfig'
 import { getAccount } from '../../features/account/accountSlice'
@@ -25,11 +25,7 @@ const FormComment = ({ label, name, required = false, disabled = false, classNam
                     {label}
                     {required && <span className='text-red-500'>*</span>}
                 </label>
-                <FastField name={name} className="input-group border rounded-sm px-2 w-full" disabled={disabled} >
-                    {({ field }) => (
-                        <textarea rows="5" {...field} />
-                    )}
-                </FastField>
+                <Field name={name} as='textarea' className="input-group border rounded-sm px-2 w-full" rows='5' disabled={disabled} />
             </div>
 
         </div>

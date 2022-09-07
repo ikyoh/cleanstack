@@ -16,7 +16,7 @@ services:
     volumes:
       - ./api:/srv/api
       - ./app/build:/srv/app
-      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/docker/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -58,16 +58,28 @@ services:
 
   database:
     container_name: ${APP_NAME}-database
-    image: postgres:13-alpine
-    restart: always
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB:-api}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
-      - POSTGRES_USER=${POSTGRES_USER:-api-platform}
-    volumes:
-      - ./docker/database:/var/lib/postgresql/data:rw
+    image: mysql:8
     ports:
-      - 5432:5432
+        - "4306:3306"
+    volumes:
+        - ./docker/db-data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_PASSWORD: secret
+      
+  # database:
+  #   container_name: ${APP_NAME}-database
+  #   image: postgres:13-alpine
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_DB=${POSTGRES_DB:-api}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
+  #     - POSTGRES_USER=${POSTGRES_USER:-api-platform}
+  #   volumes:
+  #     - ./docker/database:/var/lib/postgresql/data:rw
+  #   ports:
+  #     - 5432:5432
 
 
   adminer:

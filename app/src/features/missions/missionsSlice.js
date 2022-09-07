@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import { API_URL, API_MISSIONS, API_PATIENTS, API_PRESCRIPTIONS, API_MEDIAS, API_DOCTORS, API_ASSURANCES } from "../apiConfig"
+import { URL, API_URL, API_MISSIONS, API_PATIENTS, API_PRESCRIPTIONS, API_MEDIAS, API_DOCTORS, API_ASSURANCES } from "../apiConfig"
 import { toast } from 'react-toastify'
 import * as dayjs from 'dayjs'
 
@@ -79,7 +79,7 @@ export const addMission = createAsyncThunk('missions/addMission', async (form, T
     datas.status = "En cours"
 
     if (form.action === "patientIRI") {
-        datas.patient = API_PATIENTS + "/" + form.values.patientIRI
+        datas.patient = URL + form.values.patientIRI
         try {
             const response = await toast.promise(
                 axios.post(API_MISSIONS, datas),
@@ -104,7 +104,7 @@ export const addMission = createAsyncThunk('missions/addMission', async (form, T
         const patient = await ThunkAPI.dispatch(addPatient({ patient: form.values.patient }))
         try {
             const response = await toast.promise(
-                axios.post(API_MISSIONS, { ...datas, patient: API_URL + patient.payload['@id'] }),
+                axios.post(API_MISSIONS, { ...datas, patient: URL + patient.payload['@id'] }),
                 {
                     pending: 'Enregistrement',
                     success: 'Mission enregistrée',
@@ -149,8 +149,6 @@ export const addPrescription = createAsyncThunk('missions/addPrescription', asyn
 
 export const addDocument = createAsyncThunk('missions/addDocument', async (form) => {
 
-    console.log('form', form)
-
     const formData = new FormData();
 
     // Update the formData object
@@ -161,8 +159,7 @@ export const addDocument = createAsyncThunk('missions/addDocument', async (form)
 
     try {
         const response = await axios.post(API_MEDIAS, formData)
-        console.log('response.data', response.data)
-        const update = await axios.put(API_URL + response.data['@id'], { mission: form.mission })
+        const update = await axios.put(URL + response.data['@id'], { mission: form.mission })
         return update.data
     } catch (error) {
         if (error.response) { // get response with a status code not in range 2xx
@@ -182,8 +179,6 @@ export const addDocument = createAsyncThunk('missions/addDocument', async (form)
 
 
 export const updateMission = createAsyncThunk('missions/updateMission', async (form, ThunkAPI) => {
-
-    console.log('form', form)
 
     const datas = { ...form.values }
     delete datas.documents

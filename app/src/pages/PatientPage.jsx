@@ -96,7 +96,7 @@ const PatientPage = () => {
                                     Informations complémentaires
                                     <hr className='hr_separator' />
                                 </div>
-                                <div>
+                                <div className='whitespace-pre-line'>
                                     {patient.furtherInfos}
                                 </div>
                             </div>

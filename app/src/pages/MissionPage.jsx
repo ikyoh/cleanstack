@@ -22,6 +22,11 @@ import PatientForm from '../forms/PatientForm'
 import { getAccount } from '../features/account/accountSlice'
 import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 import { opasStatus } from '../utils/arrays'
+import axios from 'axios'
+import { URL } from '../features/apiConfig'
+import FileDownload from 'js-file-download'
+
+
 
 const MissionPage = () => {
 
@@ -54,6 +59,7 @@ const MissionPage = () => {
                 .then(response => setMission(response.payload))
         }, [])
 
+        console.log('mission', mission)
 
         useEffect(() => {
 
@@ -347,6 +353,17 @@ const MissionPage = () => {
             }
 
 
+            const downloadFile = (url, name) => {
+                axios({
+                    url: URL + '/api' + url,
+                    method: 'GET',
+                    responseType: 'blob', // Important
+                  }).then((response) => {
+                      FileDownload(response.data, name);
+                  });
+              };
+
+
             return (
 
                 <table className="responsive-table">
@@ -486,6 +503,9 @@ const MissionPage = () => {
                                 <td>{dayjs(d.createdAt).format('DD/MM/YYYY')}</td>
                                 <td>{d.comment}</td>
                                 <td className='float-right'>
+                                <div onClick={()=>downloadFile(d.contentUrl, d.filePath)}>
+                                    <AiOutlineDownload size={30} />
+                                </div>
                                 </td>
                             </tr>
                         )}

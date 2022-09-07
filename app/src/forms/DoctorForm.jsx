@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { addDoctor, updateDoctor, fetchDoctor, selectAllDoctors, addDoctorState } from "../features/doctors/doctorsSlice"
+import { addDoctor, updateDoctor, fetchDoctor, selectAllDoctors } from "../features/doctors/doctorsSlice"
 import { fetchDoctorComment, selectDoctorComment, addComment, updateComment } from "../features/comments/commentsSlice"
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import DoctorFields from './DoctorFields'
 import FormComment from '../components/forms/FormComment'
-import { nanoid } from '@reduxjs/toolkit'
 
 const DoctorForm = ({ event = false, handleCloseModal }) => {
 
@@ -36,8 +35,7 @@ const DoctorForm = ({ event = false, handleCloseModal }) => {
 
     const validationSchema = Yup.object({
         category: Yup.string().required('Champ obligatoire'),
-        fullname: Yup.string().required('Champ obligatoire'),
-        //rcc: Yup.string().required('Champ obligatoire')
+        fullname: Yup.string().required('Champ obligatoire')
     })
 
     useEffect(() => {
@@ -62,6 +60,7 @@ const DoctorForm = ({ event = false, handleCloseModal }) => {
 
     return (
         <>
+
             <div className="form-body">
                 <div className="p-5 overflow-y-scroll">
 
@@ -70,6 +69,7 @@ const DoctorForm = ({ event = false, handleCloseModal }) => {
                         initialValues={doctor}
                         validationSchema={validationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
+                            console.log('first')
                             setSubmitting(true)
                             event ? dispatch(updateDoctor(values)) : dispatch(addDoctor(values))
                             setSubmitting(false)
@@ -91,13 +91,10 @@ const DoctorForm = ({ event = false, handleCloseModal }) => {
                         <Formik
                             enableReinitialize={true}
                             initialValues={{ ...comment, doctor: doctor['@id'] }}
-                            validationSchema={validationSchema}
                             onSubmit={async (values, { setSubmitting }) => {
                                 setSubmitting(true)
-                                console.log('values', values)
                                 comment['@id'] ? dispatch(updateComment(values)) : dispatch(addComment(values))
                                 setSubmitting(false)
-                                // handleCloseModal()
                             }}
                         >
                             {({ isSubmitting }) => (

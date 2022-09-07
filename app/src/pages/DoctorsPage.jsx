@@ -44,8 +44,6 @@ const DoctorsPage = () => {
             else setSort({ by: event, direction: "asc" })
         }
 
-
-
         return (
             <>
                 <PageTitle title="Gestion des médecins" icon={<RiStethoscopeFill size={40} />}>

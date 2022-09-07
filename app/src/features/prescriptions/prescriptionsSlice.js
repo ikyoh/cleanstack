@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import { API_URL, API_PRESCRIPTIONS } from "../apiConfig"
+import { API_URL, URL, API_PRESCRIPTIONS } from "../apiConfig"
 import { toast } from 'react-toastify'
 import dayjs from "dayjs"
 import { setMissionsStatusIddle } from "../missions/missionsSlice"
@@ -97,7 +97,7 @@ export const updatePrescription = createAsyncThunk('prescriptions/updatePrescrip
 
     try {
         const response = await toast.promise(
-            axios.put(API_URL + form['@id'], datas),
+            axios.put(URL + form['@id'], datas),
             {
                 pending: 'Enregistrement',
                 success: 'Prescription modifié',
@@ -120,7 +120,7 @@ export const updatePrescriptionStatus = createAsyncThunk('prescriptions/updatePr
 
     try {
         const response = await toast.promise(
-            axios.put(API_URL + id, { status: status }),
+            axios.put(URL+ id, { status: status }),
             {
                 pending: 'Enregistrement',
                 success: 'Prescription modifié',

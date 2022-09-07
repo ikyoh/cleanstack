@@ -14,10 +14,14 @@ RUN apk add --no-cache \
 
 
 # Install pdo postgresql
-RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev; \
-	docker-php-ext-install -j$(nproc) pdo_pgsql; \
-	apk add --no-cache --virtual .pgsql-rundeps so:libpq.so.5; \
-	apk del .pgsql-deps
+# RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev; \
+# 	docker-php-ext-install -j$(nproc) pdo_pgsql; \
+# 	apk add --no-cache --virtual .pgsql-rundeps so:libpq.so.5; \
+# 	apk del .pgsql-deps
+
+# Install pdo mysql
+RUN docker-php-ext-install pdo pdo_mysql
+
 
 
 # Install composer

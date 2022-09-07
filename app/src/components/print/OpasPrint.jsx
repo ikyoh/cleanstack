@@ -9,18 +9,18 @@ import { nanoid } from '@reduxjs/toolkit'
 import { API_URL } from '../../features/apiConfig'
 
 
-Font.register({
-    family: 'Din', fonts: [
-        { src: Din },
-        { src: DinBold, fontWeight: 'bold' },
+// Font.register({
+//     family: 'Din', fonts: [
+//         { src: Din },
+//         { src: DinBold, fontWeight: 'bold' },
 
-    ]
-})
-Font.register({
-    family: 'DinCondensed', fonts: [
-        { src: DinCondensed }
-    ]
-})
+//     ]
+// })
+// Font.register({
+//     family: 'DinCondensed', fonts: [
+//         { src: DinCondensed }
+//     ]
+// })
 
 const dpi = 72
 
@@ -47,25 +47,25 @@ const styles = StyleSheet.create({
         marginHorizontal: gap / 2,
     },
     text: {
-        fontFamily: 'Din',
+
         fontSize: '10px',
         lineHeight: 1.4
     },
     textBold: {
-        fontFamily: 'Din',
+
         fontWeight: 'bold',
         fontSize: '10px',
         lineHeight: 1.4
     },
     mainTitle: {
-        fontFamily: 'Din',
+
         fontWeight: 'bold',
         fontSize: '18px',
         textAlign: 'left',
         paddingLeft: gap / 2
     },
     mainSubtitle: {
-        fontFamily: 'Din',
+
         fontSize: '12px',
         textAlign: 'left',
         paddingTop: '4px',
@@ -73,13 +73,13 @@ const styles = StyleSheet.create({
 
     },
     title: {
-        fontFamily: 'Din',
+
         fontWeight: 'bold',
         fontSize: '12px',
         textAlign: 'left'
     },
     signature: {
-        fontFamily: 'Din',
+
         fontSize: '9px',
         textAlign: 'left',
     },
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         padding: '4 10',
         borderBottom: '1px solid black',
         flexDirection: 'row',
-        fontFamily: 'Din',
+
         fontWeight: 'bold',
         fontSize: '10px',
     },
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         padding: '4 10',
         borderBottom: '1px solid black',
         flexDirection: 'row',
-        fontFamily: 'DinCondensed',
+        //fontFamily: 'DinCondensed',
         fontSize: '10px',
     },
     pagination: {
@@ -125,15 +125,15 @@ const styles = StyleSheet.create({
     },
     paginationText: {
         width: '100%',
-        fontFamily: 'Din',
+
         fontSize: '10px',
         textAlign: 'center',
     },
     userSignature: {
         marginTop: "10px",
         objectFit: "contain",
-        maxWidth:"230px",
-        maxHeight:"95px",
+        maxWidth: "230px",
+        maxHeight: "95px",
         width: "auto",
         height: "auto",
     }
@@ -412,7 +412,7 @@ const MyDoc = ({ datas, mission, patient }) => {
                             <Text style={styles.title}>
                                 Soins infirmiers
                             </Text>
-                            <Text style={{ fontFamily: 'Din', fontSize: '10px' }}>
+                            <Text style={{ fontSize: '10px' }}>
 
                             </Text>
                         </View>
@@ -420,7 +420,7 @@ const MyDoc = ({ datas, mission, patient }) => {
                         <View style={styles.caresContainer}>
                             {displayedCares().map((displayedCare) =>
                                 <View style={styles.care} key={nanoid()}>
-                                    <Text style={{ width: 60 }}>
+                                    <Text style={{ width: 80 }}>
                                         {displayedCare.act}
                                     </Text>
                                     <Text style={{ width: "100%" }}>
@@ -487,12 +487,12 @@ const MyDoc = ({ datas, mission, patient }) => {
                     </View>
                     <View style={styles.column}>
                         <Text style={styles.signature}>Signature de l'infirmier</Text>
-                        {/* {mission.user.signature &&
-                            <Image style={styles.userSignature} source={
-                                "https://cors-anywhere.herokuapp.com/" + API_URL + mission.user.signature.contentUrl
-
-                            } />
-                        } */}
+                        {mission.user.signature &&
+                            <Image
+                                style={styles.userSignature}
+                                source={API_URL + mission.user.signature.contentUrl}
+                            />
+                        }
                     </View>
                     {mission.coworkersDetailed.length > 0 &&
                         <View style={styles.column}>
@@ -545,7 +545,7 @@ const MyDoc = ({ datas, mission, patient }) => {
                             <Text style={styles.title}>
                                 Soins infirmiers
                             </Text>
-                            <Text style={{ fontFamily: 'Din', fontSize: '10px' }}>
+                            <Text style={{ fontSize: '10px' }}>
                                 Description détaillée de la prestation (selon article 7, al. 2 OPAS)
                             </Text>
                         </View>
@@ -572,19 +572,19 @@ const MyDoc = ({ datas, mission, patient }) => {
                             <View style={{
                                 padding: '0 10',
                                 flexDirection: 'row',
-                                fontFamily: 'DinCondensed',
+                                //fontFamily: 'DinCondensed',
                                 fontSize: '9px',
                             }}>
-                                <Text style={{ width: 60 }}>
+                                <Text style={{ width: 120 }}>
                                     OPAS
                                 </Text>
-                                <Text style={{ width: 60 }}>
+                                <Text style={{ width: 80 }}>
                                     Code *
                                 </Text>
                                 <Text style={{ width: '100%', paddingRight: 15 }}>
                                     Prestation
                                 </Text>
-                                <Text style={{ width: 95 }}>
+                                <Text style={{ width: 140 }}>
                                     Fréquence
                                 </Text>
                             </View>
@@ -599,16 +599,16 @@ const MyDoc = ({ datas, mission, patient }) => {
                                 </View>
                                 {groupedServices("A").map((s) =>
                                     <View style={styles.care} key={nanoid()}>
-                                        <Text style={{ width: 60 }}>
+                                        <Text style={{ width: 120 }}>
                                             {s.opas}
                                         </Text>
-                                        <Text style={{ width: 60 }}>
+                                        <Text style={{ width: 80 }}>
                                             {s.act}
                                         </Text>
                                         <Text style={{ width: '100%', paddingRight: 15 }}>
                                             {s.title}
                                         </Text>
-                                        <Text style={{ width: 95 }}>
+                                        <Text style={{ width: 140 }}>
                                             {s.frequency} fois {s.periodicity}
                                         </Text>
                                     </View>
@@ -624,16 +624,16 @@ const MyDoc = ({ datas, mission, patient }) => {
                                 </View>
                                 {groupedServices("B").map((s) =>
                                     <View style={styles.care} key={nanoid()}>
-                                        <Text style={{ width: 60 }}>
+                                        <Text style={{ width: 120 }}>
                                             {s.opas}
                                         </Text>
-                                        <Text style={{ width: 60 }}>
+                                        <Text style={{ width: 80 }}>
                                             {s.act}
                                         </Text>
                                         <Text style={{ width: '100%', paddingRight: 15 }}>
                                             {s.title}
                                         </Text>
-                                        <Text style={{ width: 95 }}>
+                                        <Text style={{ width: 140 }}>
                                             {s.frequency} fois {s.periodicity}
                                         </Text>
                                     </View>
@@ -649,16 +649,16 @@ const MyDoc = ({ datas, mission, patient }) => {
                                 </View>
                                 {groupedServices("C").map((s) =>
                                     <View style={styles.care} key={nanoid()}>
-                                        <Text style={{ width: 60 }}>
+                                        <Text style={{ width: 120 }}>
                                             {s.opas}
                                         </Text>
-                                        <Text style={{ width: 60 }}>
+                                        <Text style={{ width: 80 }}>
                                             {s.act}
                                         </Text>
                                         <Text style={{ width: '100%', paddingRight: 15 }}>
                                             {s.title}
                                         </Text>
-                                        <Text style={{ width: 95 }}>
+                                        <Text style={{ width: 140 }}>
                                             {s.frequency} fois {s.periodicity}
                                         </Text>
                                     </View>
@@ -692,7 +692,7 @@ const MyDoc = ({ datas, mission, patient }) => {
 
                 <View style={styles.row}>
                     <View style={styles.column}>
-                        <Text style={{ fontFamily: 'Din', fontSize: '8px', lineHeight: 1.4 }}>
+                        <Text style={{ fontSize: '8px', lineHeight: 1.4 }}>
                             Code* : Selon le catalogue des actes de l'ASSASD (novembre 2015)
                         </Text>
                     </View>
@@ -725,9 +725,8 @@ const OpasPrint = ({ datas, mission, patient, }) => {
         return (
             <div>
                 <PDFDownloadLink document={<MyDoc datas={datas} mission={mission} patient={patient} />} fileName={fileName}>
-                    {({ blob, url, loading, error }) =>{
-                        console.log('loading', loading)
-                        loading ? <AiOutlineDownload size={30} color={'white'} /> : <AiOutlineDownload size={30} color={'black'} />}
+                    {({ blob, url, loading, error }) =>
+                        loading ? <AiOutlineDownload size={30} color={'white'} /> : <AiOutlineDownload size={30} />
                     }
                 </PDFDownloadLink>
             </div>

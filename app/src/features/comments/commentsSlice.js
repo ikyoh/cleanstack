@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import { API_URL, API_COMMENTS } from "../apiConfig"
+import { URL, API_URL, API_COMMENTS } from "../apiConfig"
 import { toast } from 'react-toastify'
 
 
@@ -78,6 +78,7 @@ export const fetchComment = createAsyncThunk('comments/fetchComment', async (id)
 
 
 export const addComment = createAsyncThunk('comments/addComment', async (form) => {
+    console.log("addcomment")
     try {
         const response = await toast.promise(
             axios.post(API_COMMENTS, form),
@@ -96,9 +97,10 @@ export const addComment = createAsyncThunk('comments/addComment', async (form) =
 
 
 export const updateComment = createAsyncThunk('comments/updateComment', async (form) => {
+    console.log("updatecomment")
     try {
         const response = await toast.promise(
-            axios.put(API_URL + form['@id'], form),
+            axios.put(URL + form['@id'], form),
             {
                 pending: 'Enregistrement',
                 success: 'Comment modifiée',

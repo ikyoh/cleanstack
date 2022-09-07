@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import { API_URL, API_PATIENTS } from "../apiConfig"
+import { API_URL, API_PATIENTS, API_ASSURANCES, API_DOCTORS } from "../apiConfig"
 import { toast } from 'react-toastify'
 import dayjs from "dayjs"
 import { addDoctorState } from "../doctors/doctorsSlice"
@@ -97,8 +97,8 @@ export const updatePatient = createAsyncThunk('patients/updatePatient', async (f
     datas.updatedAt = dayjs().format()
 
     // action can be  / patient / doctorIRI / addDoctor / assuranceIRI / addAssurance /
-    if (form.action === "doctorIRI") datas.doctor = API_URL + form.values.doctorIRI
-    if (form.action === "assuranceIRI") datas.assurance = API_URL + form.values.assuranceIRI
+    if (form.action === "doctorIRI") datas.doctor = API_DOCTORS + "/" + form.values.doctorIRI
+    if (form.action === "assuranceIRI") datas.assurance = API_ASSURANCES + "/" + form.values.assuranceIRI
     if (form.action === "addDoctor") datas.doctor = form.values.doctor
     if (form.action === "addAssurance") datas.assurance = form.values.assurance
 
