@@ -17,7 +17,7 @@
 handle {
     @static file
     @notStatic not file
-    root * /app/build
+    root * /serv/app/build
     encode gzip zstd
     reverse_proxy @notStatic app:3000
     encode gzip zstd

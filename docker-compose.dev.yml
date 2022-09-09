@@ -45,12 +45,12 @@ services:
     container_name: ${APP_NAME}-api
     build:
         context: ./api
-        dockerfile: Dockerfile.prod
+        dockerfile: Dockerfile
     volumes:
       - ./api:/srv/api:rw,cached
     environment:
       - DATABASE_URL=${DATABASE_URL}
-      - APP_ENV=${APP_ENV}
+      - APP_ENV=prod
     ports :
       - 9000:9000
     depends_on:
@@ -63,21 +63,32 @@ services:
     ports:
         - "4306:3306"
     volumes:
-        - ./docker/database:/var/lib/mysql
+        - ./docker/db-data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
         MYSQL_ROOT_PASSWORD: secret
         MYSQL_PASSWORD: secret
       
+  # database:
+  #   container_name: ${APP_NAME}-database
+  #   image: postgres:13-alpine
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_DB=${POSTGRES_DB:-api}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
+  #     - POSTGRES_USER=${POSTGRES_USER:-api-platform}
+  #   volumes:
+  #     - ./docker/database:/var/lib/postgresql/data:rw
+  #   ports:
+  #     - 5432:5432
 
-  phpmyadmin:
-    container_name: ${APP_NAME}-phpmyadmin
-    image: phpmyadmin/phpmyadmin:5.0.2
+
+  adminer:
+    container_name: ${APP_NAME}-adminer
+    image: adminer
+    restart: always
     ports:
-      - "8080:80"
-    environment:
-      PMA_HOST: database
-    # Wait for "mysql" container to start first
+      - 8080:8080
     depends_on:
       - database
 
