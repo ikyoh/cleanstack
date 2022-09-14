@@ -48,6 +48,7 @@ services:
         dockerfile: Dockerfile.prod
     volumes:
       - ./api:/srv/api:rw,cached
+      - ./api/docker/php.ini:/usr/local/etc/php/php.ini:ro
     environment:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
