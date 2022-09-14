@@ -24,7 +24,7 @@ export const login = createAsyncThunk('authentication/login', async (form) => {
             {
                 toastId: "login"
             }
-            
+
         )
         return response.data
     } catch (error) {
@@ -43,19 +43,24 @@ const authenticationSlice = createSlice({
                 window.localStorage.removeItem("cohealthToken")
                 delete axios.defaults.headers["Authorization"]
                 state = initialState
-                window.location.href = '/'
+                window.location.href = '/login'
             }
         },
         setupToken: {
             reducer(state) {
                 // Token ?
-                const token = window.localStorage.getItem("cohealthToken");
+                const token = window.localStorage.getItem("cohealthToken")
                 // Token encore valide ?
                 if (token) {
-                    const { exp: expiration } = jwt_decode(token)
-                    if (expiration * 1000 > new Date().getTime()) {
-                        axios.defaults.headers["Authorization"] = "Bearer " + token
-                        state.status = "succeeded"
+                    console.log('setup Token', token)
+                    if (token === "undefined")
+                        window.localStorage.removeItem("cohealthToken")
+                    else {
+                        const { exp: expiration } = jwt_decode(token)
+                        if (expiration * 1000 > new Date().getTime()) {
+                            axios.defaults.headers["Authorization"] = "Bearer " + token
+                            state.status = "succeeded"
+                        }
                     }
                 }
             }
@@ -64,6 +69,7 @@ const authenticationSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(login.fulfilled, (state, action) => {
+                console.log('action.payload', action.payload)
                 axios.defaults.headers["Authorization"] = "Bearer " + action.payload.token
                 localStorage.setItem("cohealthToken", action.payload.token)
                 state.status = "succeeded"

@@ -24,7 +24,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import ProtectedRoute from './components/ProtectedRoute'
 
 
-
 import * as dayjs from 'dayjs'
 require('dayjs/locale/fr')
 dayjs.locale('fr')
@@ -37,7 +36,9 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  const authenticationStatus = useSelector(getAuthenticationStatus);
+  const authenticationStatus = useSelector(getAuthenticationStatus)
+
+  console.log('authenticationStatus', authenticationStatus)
 
   dispatch(setupToken())
 

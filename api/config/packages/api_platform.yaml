@@ -7,4 +7,3 @@ api_platform:
         html: ['text/html']
     swagger:
         versions: [3]
-

@@ -79,7 +79,7 @@ export const addMission = createAsyncThunk('missions/addMission', async (form, T
     datas.status = "En cours"
 
     if (form.action === "patientIRI") {
-        datas.patient = URL + form.values.patientIRI
+        datas.patient = API_PATIENTS + "/" + form.values.patientIRI
         try {
             const response = await toast.promise(
                 axios.post(API_MISSIONS, datas),

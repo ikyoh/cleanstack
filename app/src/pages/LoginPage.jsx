@@ -25,15 +25,12 @@ const LoginPage = () => {
     useEffect(() => {
         if (authenticationStatus === "succeeded")
             dispatch(currentAccount())
-    }, [authenticationStatus, dispatch])
+    }, [authenticationStatus, authenticationStatus])
 
-    if (authenticationStatus === "succeeded" && accountStatus === "succeeded") return (
+    if (accountStatus === "succeeded") return (
         <Navigate to="/dashboard" />
     )
-
-    if (authenticationStatus === "succeeded") return null
     else return (
-
             <div className="container w-96 p-5">
                 <div className='border rounded bg-white p-5'>
                     <div className='flex justify-center my-5 text-xl'>

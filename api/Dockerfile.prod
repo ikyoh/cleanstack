@@ -6,6 +6,21 @@ COPY composer.json /.
 # Set working directory
 WORKDIR /srv/api
 
+ARG APP_ENV
+ENV APP_ENV=$APP_ENV
+
+ARG APP_SECRET
+ENV APP_SECRET=$APP_SECRET
+
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+
+ARG JWT_PASSPHRASE
+ENV JWT_PASSPHRASE=$JWT_PASSPHRASE
+
+ARG CORS_ALLOW_ORIGIN
+ENV CORS_ALLOW_ORIGIN=$CORS_ALLOW_ORIGIN
+
 # Get nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 
@@ -34,6 +49,7 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+
 # Add user for symfony application
 #RUN groupadd -g 1000 www
 #RUN useradd -u 1000 -ms /bin/bash -g www www
@@ -42,6 +58,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY ./ ./
 
 
+RUN composer dump-env prod
 
 # Copy existing application directory permissions
 #COPY --chown=www:www . /var/www

@@ -18,8 +18,6 @@ const PatientsPage = () => {
     const navigate = useNavigate();
 
     const newPatientID = useSelector(getPatientsNavigate)
-
-    console.log('newPatientID', newPatientID)
     
     useEffect(() => {
         if (newPatientID)

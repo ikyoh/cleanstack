@@ -15,13 +15,10 @@
 
 
 handle {
-    @static file
-    @notStatic not file
-    root * /serv/app/build
-    encode gzip zstd
-    reverse_proxy @notStatic app:3000
+    root * /srv/app/build
     encode gzip zstd
     file_server
+    #reverse_proxy @notStatic app:3000
 }
 
 handle_path /api* {

@@ -114,9 +114,9 @@ const accountSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(loginAccount.fulfilled, (state, action) => {
-                console.log('action.payload.token', action.payload.token)
-                axios.defaults.headers["Authorization"] = "Bearer " + action.payload.token
+                console.log('action.payload', action.payload)
                 localStorage.setItem("cohealthToken", action.payload.token)
+                axios.defaults.headers["Authorization"] = "Bearer " + action.payload.token
                 state.token = "succeeded"
                 state.error = null
             })
