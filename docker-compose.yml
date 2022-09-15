@@ -45,7 +45,7 @@ services:
     container_name: ${APP_NAME}-api
     build:
         context: ./api
-        dockerfile: Dockerfile.prod
+        dockerfile: Dockerfile
     volumes:
       - ./api:/srv/api:rw,cached
       - ./api/docker/php.ini:/usr/local/etc/php/php.ini:ro

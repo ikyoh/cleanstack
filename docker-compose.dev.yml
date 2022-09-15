@@ -15,7 +15,7 @@ services:
       DOMAIN_NAME: ${DOMAIN_NAME:-myapp.local}  
     volumes:
       - ./api:/srv/api
-      - ./app/build:/srv/app
+      - ./app:/srv/app
       - $PWD/docker/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
@@ -28,7 +28,7 @@ services:
     container_name: ${APP_NAME}-app
     build:
       context: ./app
-      dockerfile: Dockerfile.dev
+      target: app_dev
     stdin_open: true
     volumes:
       - ./app:/app
@@ -48,9 +48,13 @@ services:
         dockerfile: Dockerfile
     volumes:
       - ./api:/srv/api:rw,cached
+      - ./api/docker/php.ini:/usr/local/etc/php/php.ini:ro
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - APP_ENV=prod
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@database:3306/${DB_NAME}?serverVersion=8&charset=utf8mb4
+      - JWT_PASSPHRASE=${JWT_PASSPHRASE}
+      - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN}
     ports :
       - 9000:9000
     depends_on:
@@ -63,32 +67,22 @@ services:
     ports:
         - "4306:3306"
     volumes:
-        - ./docker/db-data:/var/lib/mysql
+        - ./docker/database:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-        MYSQL_ROOT_PASSWORD: secret
-        MYSQL_PASSWORD: secret
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+        MYSQL_USER: ${DB_USER}
+        MYSQL_PASSWORD: ${DB_PASS}
+        MYSQL_DATABASE : ${DB_NAME}
       
-  # database:
-  #   container_name: ${APP_NAME}-database
-  #   image: postgres:13-alpine
-  #   restart: always
-  #   environment:
-  #     - POSTGRES_DB=${POSTGRES_DB:-api}
-  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
-  #     - POSTGRES_USER=${POSTGRES_USER:-api-platform}
-  #   volumes:
-  #     - ./docker/database:/var/lib/postgresql/data:rw
-  #   ports:
-  #     - 5432:5432
 
-
-  adminer:
-    container_name: ${APP_NAME}-adminer
-    image: adminer
-    restart: always
+  phpmyadmin:
+    container_name: ${APP_NAME}-phpmyadmin
+    image: phpmyadmin/phpmyadmin:5.0.2
     ports:
-      - 8080:8080
+      - "8080:80"
+    environment:
+      PMA_HOST: database
     depends_on:
       - database
 

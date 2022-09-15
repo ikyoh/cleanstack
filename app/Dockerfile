@@ -1,6 +1,5 @@
 FROM node:16-alpine as app_common
 
-
 ARG REACT_APP_URL
 ENV REACT_APP_URL=$REACT_APP_URL
 
@@ -11,11 +10,16 @@ COPY . ./
 
 EXPOSE 3000
 
+
 FROM app_common AS app_prod
 
 ENV NODE_ENV production
-
 RUN npm run build --force
+
+
+FROM app_common AS app_dev
+
+CMD ["npm", "run", "start"]
 
 
 

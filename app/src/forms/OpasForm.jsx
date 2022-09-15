@@ -82,18 +82,21 @@ const OpasForm = ({ event = false, beginAt = false, mission = false, endAt = fal
     const calcNumberofDays = () => {
         const date1 = dayjs(beginAt)
         const date2 = dayjs(endAt)
+        console.log('jours', date2.diff(date1, 'days'))
         return (date2.diff(date1, 'days'))
     }
 
     const calcNumberWeeks = () => {
         const date1 = dayjs(beginAt).week();
         const date2 = dayjs(endAt).week();
+        console.log('semaines', date2 - date1 + 1)
         return (date2 - date1 + 1)
     }
 
     const calcNumberMonths = () => {
         const date1 = dayjs(beginAt).month()
         const date2 = dayjs(endAt).month()
+        console.log('mois', date2 - date1 + 1)
         return (date2 - date1 + 1)
     }
 

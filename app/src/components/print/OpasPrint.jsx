@@ -447,7 +447,7 @@ const MyDoc = ({ datas, mission, patient }) => {
                     </View>
                     <View style={{ marginHorizontal: gap / 2 }} >
                         <Text style={styles.textBold}>
-                            Total A + B + C : {datas.content.totalA + datas.content.totalB + datas.content.totalC} min. ({Math.round((datas.content.totalA + datas.content.totalB + datas.content.totalC) * 100 / 60) / 100} h)
+                            Total : {datas.content.totalA + datas.content.totalB + datas.content.totalC} min. ({Math.round((datas.content.totalA + datas.content.totalB + datas.content.totalC) * 100 / 60) / 100} h)
                         </Text>
                     </View>
                 </View>
@@ -684,7 +684,7 @@ const MyDoc = ({ datas, mission, patient }) => {
                     </View>
                     <View style={{ marginHorizontal: gap / 2 }} >
                         <Text style={styles.textBold}>
-                            Total A + B + C : {datas.content.totalA + datas.content.totalB + datas.content.totalC} min. ({Math.round((datas.content.totalA + datas.content.totalB + datas.content.totalC) * 100 / 60) / 100} h)
+                            Total : {datas.content.totalA + datas.content.totalB + datas.content.totalC} min. ({Math.round((datas.content.totalA + datas.content.totalB + datas.content.totalC) * 100 / 60) / 100} h)
                         </Text>
                     </View>
                 </View>

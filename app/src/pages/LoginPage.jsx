@@ -34,7 +34,7 @@ const LoginPage = () => {
             <div className="container w-96 p-5">
                 <div className='border rounded bg-white p-5'>
                     <div className='flex justify-center my-5 text-xl'>
-                        Application CoHealth
+                        Application CoHealthfffff
                     </div>
                     <div className='h-1 mx-auto bg-info w-3/6 md:w-2/6 mb-6 py-0 rounded-full'></div>
                     <LoginFrom />
